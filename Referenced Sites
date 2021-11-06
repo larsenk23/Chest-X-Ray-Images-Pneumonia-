@@ -1,0 +1,9 @@
+Referenced Sites:
+https://github.com/Hvass-Labs/TensorFlow-Tutorials
+    For information on TensorFlow
+https://www.kaggle.com/victorbnnt/97-accuracy-chest-x-ray-classification
+    For importing data and plotting images
+https://machinelearningmastery.com/display-deep-learning-model-training-history-in-keras/
+    For plotting accuracy and loss
+https://ermlab.com/en/blog/nlp/cifar-10-classification-using-keras-tutorial/
+    For model creation
