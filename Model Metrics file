@@ -1,0 +1,76 @@
+Model Metrics file
+
+## hyperparameter Model Tuning:
+
+class CNNHyperModel(HyperModel):
+  #def __init__(self, input_shape, num_classes):
+    #self.input_shape =input_shape
+    #self.num_classes =num_classes
+
+    def build(self,hp):
+        model=Sequential()
+        model.add(Conv2D(filters=hp.Int('1Conv_num_classes',default=32,min_value=32,step=16,
+                                        max_value=256),
+                      activation="relu",padding='same', kernel_size=(3,3),input_shape=(im_height, im_width, 1)))
+        model.add(MaxPooling2D(pool_size=(2,2)))
+        model.add(Conv2D(filters=hp.Int("2Conv_num_classes",default=32,min_value=32,
+                                      max_value=256,step=16),
+                     activation='relu',padding='same',kernel_size=(3,3)))
+        model.add(MaxPooling2D(pool_size=(2,2)))
+        model.add(Dropout(rate=hp.Float("1Dropout",min_value=0.0,
+                                    max_value=0.5,step=0.05)))
+        model.add(Conv2D(filters=hp.Int("3Conv_num_classes",default=64,min_value=32,
+                                       max_value=256,step=16),
+                     activation='relu',padding='same',kernel_size=(3,3)))
+        model.add(MaxPooling2D(pool_size=(2,2)))
+        model.add(Conv2D(filters=hp.Int("4Conv_num_classes",default=64,min_value=32,
+                            max_value=256,step=16),
+                     activation='relu',padding='same',kernel_size=(3,3)))
+        model.add(MaxPooling2D(pool_size=(2,2)))
+        model.add(Dropout(rate=hp.Float("2Dropout", min_value=0.0,
+                                    max_value=0.5,step=0.05)))
+        model.add(Conv2D(filters=hp.Int("5Conv_num_classes",default=128,min_value=32,
+                                       max_value=256,step=16),
+                     activation='relu',padding='same',kernel_size=(3,3)))
+        model.add(MaxPooling2D(pool_size=(2,2)))
+        model.add(Conv2D(filters=hp.Int("6Conv_NUM_CLASSES",default=128,min_value=32,
+                                       max_value=256,step=16),
+                     activation='relu',padding='same',kernel_size=(3,3)))
+        model.add(MaxPooling2D(pool_size=(2,2)))
+        model.add(Dropout(rate=hp.Float("3Dropout",min_value=0.0,
+                                    max_value=0.5,step=0.05)))
+        model.add(Flatten())
+        model.add(Dense(units=hp.Int("Dense",min_value=32,default=516,
+                                 max_value=512,step=16),activation='relu'))
+        model.add(Dropout(rate=hp.Float("Dense_Dropout",min_value=0.0,
+                                    max_value=0.5,step=0.05)))
+        model.add(Dense(units=hp.Int("2Dense",min_value=32,default=516,
+                                 max_value=512,step=16),activation='relu'))
+        model.add(Dropout(rate=hp.Float("2Dense_Dropout",min_value=0.0,
+                                    max_value=0.5,step=0.05)))
+        model.add(Dense(1,activation='sigmoid'))
+
+        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+        return model
+
+hypermodel=CNNHyperModel()
+
+## hyperparameters Results:
+
+values": {"1Conv_num_classes": 96, "2Conv_num_classes": 64, "1Dropout": 0.0,
+"3Conv_num_classes": 144, "4Conv_num_classes": 32, "2Dropout": 0.35000000000000003,
+ "5Conv_num_classes": 144, "6Conv_NUM_CLASSES": 48, "3Dropout": 0.1, "Dense": 144,
+ "Dense_Dropout": 0.1, "2Dense": 160, "2Dense_Dropout": 0.05}
+
+ ## Model Results:
+
+ Classification report:
+               precision    recall  f1-score   support
+
+           0       0.95      0.95      0.95       315
+           1       0.98      0.98      0.98       853
+
+    accuracy                           0.97      1168
+   macro avg       0.96      0.96      0.96      1168
+weighted avg       0.97      0.97      0.97      1168
